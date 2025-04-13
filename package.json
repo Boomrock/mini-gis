@@ -1,0 +1,48 @@
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && electron-builder"
+  },
+  "devDependencies": {
+    "@types/electron": "^1.6.12",
+    "electron": "^35.1.4",
+    "electron-vite": "^3.1.0",
+    "vite-plugin-dts": "^4.5.3",
+    "vite-plugin-electron": "^0.29.0",
+    "vite-plugin-electron-renderer": "^0.14.6"
+  },
+  "name": "geo-vite",
+  "version": "1.0.0",
+  "main": "dist-electron/index.js",
+  "dependencies": {
+    "browserslist": "^4.24.4",
+    "cac": "^6.7.14",
+    "caniuse-lite": "^1.0.30001712",
+    "convert-source-map": "^2.0.0",
+    "debug": "^4.4.0",
+    "electron-to-chromium": "^1.5.132",
+    "esbuild": "^0.25.2",
+    "escalade": "^3.2.0",
+    "gensync": "^1.0.0-beta.2",
+    "globals": "^11.12.0",
+    "js-tokens": "^4.0.0",
+    "jsesc": "^3.1.0",
+    "json5": "^2.2.3",
+    "lru-cache": "^5.1.1",
+    "magic-string": "^0.30.17",
+    "ms": "^2.1.3",
+    "nanoid": "^3.3.11",
+    "node-releases": "^2.0.19",
+    "picocolors": "^1.1.1",
+    "postcss": "^8.5.3",
+    "rollup": "^4.39.0",
+    "semver": "^6.3.1",
+    "source-map-js": "^1.2.1",
+    "update-browserslist-db": "^1.1.3",
+    "vite": "^6.2.5",
+    "yallist": "^3.1.1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
