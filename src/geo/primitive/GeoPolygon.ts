@@ -4,14 +4,28 @@ import GeoObject from "@geo/primitive/GeoObject";
 import GeoStyle from "@geo/styles/GeoStyle";
 
 export default class Polygon extends GeoObject {
-    constructor(points: Point[], style: GeoStyle = null, metadata: Metadata = {description:""}) {
-        super(points, style, metadata);
+    constructor(points: Point[], style: GeoStyle = null, selectedStyle: GeoStyle = null, metadata: Metadata = {description:""}) {
+        super(points, style, selectedStyle, metadata);
         if (points.length < 3) {
             throw new Error("A polygon must have at least three points.");
         }
     }
-    public draw(ctx: CanvasRenderingContext2D, lod: number): void {
-        super.draw(ctx, lod)
+    contains(point: Point): boolean {
+        // алгоритм "луча" — определяет, внутри ли точка полигона
+        let inside = false;
+        const n = this.points.length;
+        for (let i = 0, j = n - 1; i < n; j = i++) {
+            const pi = this.points[i], pj = this.points[j];
+            if ((pi.y > point.y) !== (pj.y > point.y) &&
+                point.x < (pj.x - pi.x) * (point.y - pi.y) / (pj.y - pi.y) + pi.x) {
+                inside = !inside;
+            }
+        }
+        return inside;
+    }
+    
+    public draw(ctx: CanvasRenderingContext2D, isSelected: boolean = false): void {
+        super.draw(ctx)
         // Начинаем новый путь
         ctx.save()
         ctx.beginPath();
@@ -23,14 +37,18 @@ export default class Polygon extends GeoObject {
         ctx.moveTo(points[0].x, points[0].y);
         
         // Соединяем все точки
-        for (let i = 1; i < points.length; i = i + lod) {
+        for (let i = 1; i < points.length; i += 1) {
             ctx.lineTo(points[i].x, points[i].y);
         }
         
         // Закрываем путь (соединяем последнюю точку с первой)
         ctx.closePath();
-        
-        this._style?.apply(ctx)
+        if(isSelected){
+            this._selectedStyle.apply(ctx);
+        }
+        else{
+            this._style?.apply(ctx);
+        }
 
         // Рисуем контур и заливку
         ctx.stroke();

@@ -5,8 +5,8 @@ import GeoStyle from "@geo/styles/GeoStyle";
 
 export default class GeoPoint extends GeoObject {
 
-    constructor(point: Point, style: GeoStyle = null, metadata: Metadata = {description:""}) {
-        super([point], style, metadata);
+    constructor(point: Point, style: GeoStyle = null, selectedStyle: GeoStyle = null,  metadata: Metadata = {description:""}) {
+        super([point], style, selectedStyle, metadata);
     }
 
     get point(): Point {
@@ -20,16 +20,30 @@ export default class GeoPoint extends GeoObject {
     public toString(): string {
         return `(${this.points[0].toString()})`;
     }
-
+    public draw(ctx: CanvasRenderingContext2D, isSelected: boolean = false): void {
+        super.draw(ctx);
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(this.point.x, this.point.y, 5, 0, Math.PI * 2); // x, y, радиус, начальный угол, конечный угол
+        if(isSelected){
+            this._selectedStyle.apply(ctx);
+        }
+        else{
+            this._style?.apply(ctx);
+        }
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore()
+    }
+    contains(point: Point): boolean {
+        const radius = 5; // радиус точки
+        const dx = this.point.x - point.x;
+        const dy = this.point.y - point.y;
+        return dx * dx + dy * dy <= radius * radius;
+    }
     private degreesToRadians(deg) : number {
         return deg * Math.PI / 180;
       }
     
-    private mercatorProjection(lat, lon): Point {
 
-        const R = 6378137; // Радиус Земли в метрах (WGS84)
-        const x = R * this.degreesToRadians(lon);
-        const y = R * Math.log(Math.tan(Math.PI / 4 + this.degreesToRadians(lat) / 2));
-        return new Point(x, y);
-    }
 }

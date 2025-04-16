@@ -52,7 +52,7 @@ export default class PolylineStyle extends GeoStyle {
 // Константный стиль: Сплошная синяя линия, толщина 2
 export const SolidBluePolylineStyle = new PolylineStyle();
 SolidBluePolylineStyle.strokeStyle = '#33bbff';
-SolidBluePolylineStyle.lineWidth = 10;
+SolidBluePolylineStyle.lineWidth = 2;
 
 // Константный стиль: Пунктирная красная линия, толщина 3
 export const DashedRedPolylineStyle = new PolylineStyle();

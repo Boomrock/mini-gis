@@ -103,11 +103,12 @@ export default class Layer {
             .filter(obj => obj._points.length > 0);
     }
 
-    public draw(ctx: CanvasRenderingContext2D, lod: number) {
-        this._geoObjects.forEach(obj => obj.draw(ctx, lod));
+    public draw(ctx: CanvasRenderingContext2D) {
+        this._geoObjects.forEach(obj => obj.draw(ctx));
     }
 
     get objects(): GeoObject[] {
         return this._geoObjects;
     }
+
 }

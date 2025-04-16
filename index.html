@@ -20,7 +20,11 @@
             height: 100%;
             position: relative;
         }
-
+        #container{
+            position: absolute;
+            bottom: 0;
+            z-index: 2;
+        }
         #canvas {
             position: absolute;
             top: 0;
@@ -71,6 +75,7 @@
             <div id="layers-container"></div>
             <button id="open-file-btn">Загрузить слой</button>
         </div>
+        <div id="container"></div>
     </div>
     <script type="module" src="/src/main.ts"></script>
 

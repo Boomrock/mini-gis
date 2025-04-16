@@ -11,14 +11,16 @@ export default abstract class GeoObject {
     protected _metadata : Metadata;
     protected _pivot: Point = new Point(0, 0);
     protected _style: GeoStyle;
+    protected _selectedStyle: GeoStyle;
 
-    constructor(points: Point[], style: GeoStyle = null, metadata: Metadata = {description:""}) {
+    constructor(points: Point[], style: GeoStyle = null, selectedStyle: GeoStyle = null, metadata: Metadata = {description:""}) {
         this._metadata = metadata;
-        this.points = points
+        this.points = points;
         if(this.points.length > 0){
             this._pivot = this.getAveragePoint()!;
         }
-        this._style = style
+        this._style = style;
+        this._selectedStyle = selectedStyle;
     }
 
     get metadata(): Metadata {
@@ -76,6 +78,7 @@ export default abstract class GeoObject {
         );
     }
     // Абстрактные методы
-    public draw(ctx: CanvasRenderingContext2D, lod: number): void{};
+    public contains(point: Point, ctx: CanvasRenderingContext2D = null):boolean{ return false; }
+    public draw(ctx: CanvasRenderingContext2D, isSelected: boolean = false): void{};
     abstract toString(): string;
 }
